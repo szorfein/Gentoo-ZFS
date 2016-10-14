@@ -27,8 +27,6 @@ function ifAlrealyMount() {
 
 if ifAllDir ; then
 
-    echo "The Begin..."
-
     if ifAlrealyMount ; then
         echo "filesystem alrealy mount..."
     else
@@ -59,6 +57,7 @@ function ifGentooHere() {
 }
 
 if ifGentooHere ; then
+    echo "Chroot into gentoo complete."
     chroot $WORKDIR /bin/bash || exit 1
 else
     echo "The End."
