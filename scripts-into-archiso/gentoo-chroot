@@ -46,11 +46,11 @@ fi
 
 function ifGentooHere() {
     local d_src="$WORKDIR/usr/src"
-    local d_boot="$WORKDIR/boot/grub"
+    local d_lib="$WORKDIR/lib64/gentoo"
     local d_var="$WORKDIR/var/log"
     local d_etc="$WORKDIR/etc/portage"
 
-    if [ -d $d_src ] && [ -d $d_boot ] && [ -d $d_var ] && [ -d $d_etc ]; then
+    if [ -d $d_src ] && [ -d $d_lib ] && [ -d $d_var ] && [ -d $d_etc ]; then
         return 0
     else
         echo "You must download a stage 3 for gentoo and unpack it."

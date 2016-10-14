@@ -1,0 +1,10 @@
+=sys-fs/zfs-0.6.5.8 **
+x11-base/xorg-server
+x11-base/xorg-drivers
+x11-drivers/xf86-input-keyboard
+x11-drivers/xf86-input-mouse
+x11-drivers/xf86-input-evdev
+x11-drivers/xf86-input-synaptics
+#x11-drivers/xf86-video-intel
+#x11-drivers/xf86-video-nouveau
+#x11-drivers/xf86-video-intel
