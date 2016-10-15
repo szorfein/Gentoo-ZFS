@@ -6,8 +6,14 @@ ZFS_NAME=${1:-}
 # Edit here, with full path.
 DISK_ZFS="${2:-}"
 
+# If you want create user directory now, set a name.
+HOME_USERNAME="${3:-}"
+
 # We create swap ?
 DISK_SWAP="yes"
+
+# Swap Size in Gigabyte
+SWAP_SIZE="4G"
 
 # For old HDD with sector size of 512, set to "9" (2^9=512)
 ASHIFT_VALUE="12"
@@ -18,16 +24,13 @@ TMP_MOUNT="/mnt"
 # U can let default here.
 ROOT_NAME="gentoo"
 
-# If you want create user directory now, set a name.
-HOME_USERNAME="${3:-}"
-
 function howto() {
     echo "call $0 zfs_name zfs_disk home_name";
     echo "example: $0 zfsDark /dev/disk/by-id/ata-ST9500423AS_S2V0QX6A bob"
     echo "if param 'bob' is omit, user directory will not be created now."
 }
 
-function ifEmpty() {
+function isEmpty() {
     local dir=$(ls $TMP_MOUNT | head -n 1)
     if [ $dir ] ; then return 1; fi
 }
@@ -35,7 +38,9 @@ function ifEmpty() {
 function ctrlParameter() {
     if [ -z $ZFS_NAME ] ; then howto; return 1; fi
     if [ -z $DISK_ZFS ] ; then howto; return 1; fi
-    if [ ! -d $DISK_ZFS ] ; then echo "Disk, partition not exist"; return 1;fi
+    if [ ! -d $DISK_ZFS ] && [ ! -L $DISK_ZFS ] ; then 
+        echo "Disk, partition not exist"; return 1;
+    fi
     if ! isEmpty ; then echo "$TMP_MOUNT is not empty"; return 1; fi
 }
 
@@ -44,8 +49,8 @@ function addRoot() {
         -O normalization=formD \
         -O mountpoint=/ -O canmount=off \
         -O xattr=sa -O acltype=posixacl \
-        -m none -R ${TMP_MOUNT} \
-        -o exec=off -o devices=off -o setuid=off \
+        -R ${TMP_MOUNT} \
+        -O exec=off -O devices=off \
         ${ZFS_NAME} ${DISK_ZFS} || return 1
     echo "Root created"
 }
@@ -67,19 +72,17 @@ function addVar() {
     zfs create ${ZFS_NAME}/var/log || return 1
     zfs create -o com.sun:auto-snapshot=false \
         ${ZFS_NAME}/var/cache || return 1
-    zfs create -o com.sun:auto-snapshot=false \
-        -o exec=on -o compression=off ${ZFS_NAME}/var/tmp || return 1
-    echo "var created"
+    zfs create -o com.sun:auto-snapshot=false -o exec=on \
+        -o compression=off -o sync=disabled ${ZFS_NAME}/var/tmp || return 1
+    #zfs create -o recordsize=8k -o mountpoint=/var/lib/postgresql \
+    #    ${ZFS_NAME}/var/postgres || return 1
+    #zfs create -o recordsize=16k -o mountpoint=/var/lib/mysql \
+    #    ${ZFS_NAME}/var/mysql || return 1
+    echo "var/{log,cache,tmp} created"
 }
 
 function addPortage() {
     zfs create ${ZFS_NAME}/usr/portage || return 1
-    zfs create -o mountpoint=/usr/portage/distfiles \
-        -o compression=off ${ZFS_NAME}/distfiles || return 1
-    zfs create -o mountpoint=/usr/portage/packages \
-        -o compression=off mypool/GENTOO/packages || return 1
-    zfs create -o mountpoint=/var/tmp/portage \
-        -o sync=disabled mypool/GENTOO/build-dir || return 1
     echo "portage created"
 }
 
@@ -89,8 +92,10 @@ function addHome() {
         -o setuid=on ${ZFS_NAME}/home/root || return 1
     if [ $HOME_USERNAME ] ; then 
         zfs create -o exec=on ${ZFS_NAME}/home/${HOME_USERNAME} || return 1; 
+        echo "home/{root,$HOME_USERNAME} created"
+    else
+        echo "home/{root} created"
     fi
-    echo "home created"
 }
 
 function addOpt() {
@@ -102,7 +107,7 @@ function addOpt() {
 }
 
 function addSwap() {
-    zfs create -V 4G -b $(getconf PAGESIZE) \
+    zfs create -V ${SWAP_SIZE} -b $(getconf PAGESIZE) \
         -o logbias=throughput -o sync=always \
         -o primarycache=metadata \
         -o com.sun:auto-snapshot=false ${ZFS_NAME}/swap || return 1
