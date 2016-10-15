@@ -1,0 +1,130 @@
+#! /bin/bash
+
+# default will be archiso if you have boot on my iso, change it.
+ZFS_NAME=${1:-}
+
+# Edit here, with full path.
+DISK_ZFS="${2:-}"
+
+# We create swap ?
+DISK_SWAP="yes"
+
+# For old HDD with sector size of 512, set to "9" (2^9=512)
+ASHIFT_VALUE="12"
+
+# Temp directory where you install gentoo.
+TMP_MOUNT="/mnt"
+
+# U can let default here.
+ROOT_NAME="gentoo"
+
+# If you want create user directory now, set a name.
+HOME_USERNAME="${3:-}"
+
+function howto() {
+    echo "call $0 zfs_name zfs_disk home_name";
+    echo "example: $0 zfsDark /dev/disk/by-id/ata-ST9500423AS_S2V0QX6A bob"
+    echo "if param 'bob' is omit, user directory will not be created now."
+}
+
+function ifEmpty() {
+    local dir=$(ls $TMP_MOUNT | head -n 1)
+    if [ $dir ] ; then return 1; fi
+}
+
+function ctrlParameter() {
+    if [ -z $ZFS_NAME ] ; then howto; return 1; fi
+    if [ -z $DISK_ZFS ] ; then howto; return 1; fi
+    if [ ! -d $DISK_ZFS ] ; then echo "Disk, partition not exist"; return 1;fi
+    if ! isEmpty ; then echo "$TMP_MOUNT is not empty"; return 1; fi
+}
+
+function addRoot() {
+    zpool create -o ashift=${ASHIFT_VALUE} -O atime=off -O compression=lz4 \
+        -O normalization=formD \
+        -O mountpoint=/ -O canmount=off \
+        -O xattr=sa -O acltype=posixacl \
+        -m none -R ${TMP_MOUNT} \
+        -o exec=off -o devices=off -o setuid=off \
+        ${ZFS_NAME} ${DISK_ZFS} || return 1
+    echo "Root created"
+}
+
+function addSubRoot() {
+    zfs create -o mountpoint=none -o canmount=off ${ZFS_NAME}/ROOT || return 1
+    zfs create -o mountpoint=/ ${ZFS_NAME}/ROOT/${ROOT_NAME} || return 1
+    echo "gentoo created"
+}
+
+function addUsr() {
+    zfs create -o canmount=off -o exec=on ${ZFS_NAME}/usr || return 1
+    zfs create -o sync=disabled ${ZFS_NAME}/usr/src || return 1
+    echo "usr created"
+}
+
+function addVar() {
+    zfs create -o canmount=off ${ZFS_NAME}/var || return 1
+    zfs create ${ZFS_NAME}/var/log || return 1
+    zfs create -o com.sun:auto-snapshot=false \
+        ${ZFS_NAME}/var/cache || return 1
+    zfs create -o com.sun:auto-snapshot=false \
+        -o exec=on -o compression=off ${ZFS_NAME}/var/tmp || return 1
+    echo "var created"
+}
+
+function addPortage() {
+    zfs create ${ZFS_NAME}/usr/portage || return 1
+    zfs create -o mountpoint=/usr/portage/distfiles \
+        -o compression=off ${ZFS_NAME}/distfiles || return 1
+    zfs create -o mountpoint=/usr/portage/packages \
+        -o compression=off mypool/GENTOO/packages || return 1
+    zfs create -o mountpoint=/var/tmp/portage \
+        -o sync=disabled mypool/GENTOO/build-dir || return 1
+    echo "portage created"
+}
+
+function addHome() {
+    zfs create -o mountpoint=/home ${ZFS_NAME}/home || return 1
+    zfs create -o mountpoint=/root \
+        -o setuid=on ${ZFS_NAME}/home/root || return 1
+    if [ $HOME_USERNAME ] ; then 
+        zfs create -o exec=on ${ZFS_NAME}/home/${HOME_USERNAME} || return 1; 
+    fi
+    echo "home created"
+}
+
+function addOpt() {
+    zfs create ${ZFS_NAME}/opt || return 1
+    #zfs create ${ZFS_NAME}/opt/musics || return 1
+    #zfs create ${ZFS_NAME}/opt/games || return 1
+    #zfs create ${ZFS_NAME}/opt/backups || return 1
+    echo "opt created"
+}
+
+function addSwap() {
+    zfs create -V 4G -b $(getconf PAGESIZE) \
+        -o logbias=throughput -o sync=always \
+        -o primarycache=metadata \
+        -o com.sun:auto-snapshot=false ${ZFS_NAME}/swap || return 1
+    echo "swap created"
+}
+
+function MakeTheJob() {
+    if ! ctrlParameter ; then echo "Problem with parameter"; return 1; fi
+    if ! addRoot ; then echo "Problem with root"; return 1; fi
+    if ! addSubRoot ; then echo "Problem with subroot"; return 1; fi
+    if ! addUsr ; then echo "Problem with usr"; return 1; fi
+    if ! addVar ; then echo "Problem with var"; return 1; fi
+    if ! addPortage ; then echo "Problem with portage"; return 1; fi
+    if ! addHome ; then echo "Problem with home"; return 1; fi
+    if ! addOpt ; then echo "Problem with opt"; return 1; fi
+    if ! addSwap ; then echo "Problem with swap"; return 1; fi
+}
+
+if MakeTheJob ; then
+    echo "Format Success"
+    exit 0
+else
+    echo "Format Fail"
+    exit 1
+fi
