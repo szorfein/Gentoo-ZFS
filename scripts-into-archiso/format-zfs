@@ -10,6 +10,7 @@ TMP_MOUNT="${TMP_MOUNT:-/mnt}"
 ROOT_NAME="${ROOT_NAME:-gentoo}"
 DATABASE_PSQL="${DATABASE_PSQL:-}"
 DATABASE_MSQL="${DATABASE_MSQL:-}"
+ONLYDATASET="${ONLYDATASET:-}"
 
 function howto() {
     cat <<- END
@@ -24,12 +25,14 @@ function howto() {
     -r  -  name of system, default is 'gentoo'
     -P  -  Create postgresql directory now, default no
     -M  -  Create Mysql directory now, default no
+    -O  -  Only Create Datasets if pool have create pool manualy.
     -v  -  print help
     -h  -  print help too
 
 Examples:
 $0 -H ninja -z rpool -s -S 2G -a -d /dev/disk/by-id/ata-ST9500423AS_S2V0QX6A
 $0 -z improbable_name_for_zpool -d /dev/disk/by-id/ata-ST9500423AS_S2V0QX6A-part3
+$0 -z zpoolAlrealyExist -O -s -S 4G -P -M
 END
     exit ${1}
 }
@@ -39,12 +42,22 @@ function isEmpty() {
     if [ $dir ] ; then return 1; fi
 }
 
+function checkPoolExist() {
+    local BOOL=$(zpool status -v ${ZFS_NAME} | head -n 1)
+    if [ -z $BOOL ] ; echo "Pool doesn't exist"; return 1; fi
+}
+
 function ctrlParameter() {
     if [ -z $ZFS_NAME ] ; then howto 1; fi
-    if [ -z $DISK_ZFS ] ; then howto 1; fi
+    if [ -z $DISK_ZFS ] && [ -z $ONLYDATASET ]; then howto 1; fi
     if [ ! -d $DISK_ZFS ] && [ ! -L $DISK_ZFS ] ; then 
         echo "Disk, partition not exist"; return 1;
     fi
+
+    if [ $ONLYDATASET ] ; then
+        if ! checkPoolExist ; then echo "Pool unknown"; exit 1; fi
+    fi
+
     if ! isEmpty ; then echo "$TMP_MOUNT is not empty"; return 1; fi
 }
 
@@ -154,6 +167,7 @@ while getopts 'H:z:d:sS:am:r:PMvh' arg ; do
         r ) ROOT_NAME="${OPTARG}" ;;
         P ) DATABASE_PSQL=1 ;;
         M ) DATABASE_MSQL=1 ;;
+        O ) ONLYDATASET=1 ;;
         v | h) howto 0 ;;
         *)
             echo "Invalid argument '${arg}'"
