@@ -35,4 +35,4 @@ sha256sum: b1dcc5613c9d4504459f0121e8c1f92cf54f3ce3f52d31625a02e2ed3bfa5795
 * zfs-0.6.5.8 compatible with >=kernel-4.4 
 
 **Start process with:**  
-[Gentoo-ZFS install](https://github.com/szorfein/Gentoo-ZFS/wiki/zfs-install-version-without-any-explain)  
+[Gentoo-ZFS install](https://github.com/szorfein/Gentoo-ZFS/wiki/gentoo-zfs)  
