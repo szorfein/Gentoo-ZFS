@@ -44,7 +44,7 @@ function isEmpty() {
 
 function checkPoolExist() {
     local BOOL=$(zpool status -v ${ZFS_NAME} | head -n 1)
-    if [ -z $BOOL ] ; echo "Pool doesn't exist"; return 1; fi
+    if [ -z $BOOL ] ; then echo "Pool doesn't exist"; return 1; fi
 }
 
 function ctrlParameter() {
