@@ -1,5 +1,4 @@
 export PATH=$HOME/bin:$PATH
-export GPG_TTY=$(tty)
 
 unset GREP_OPTIONS
 test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || \

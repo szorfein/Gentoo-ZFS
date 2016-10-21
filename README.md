@@ -16,7 +16,7 @@ sha256sum: b1dcc5613c9d4504459f0121e8c1f92cf54f3ce3f52d31625a02e2ed3bfa5795
 * 2G memory minimum
     
 **Optional:**
-* MicroSD or USB key for create /boot partition, zfs have better performance if you create pool using whole disks.
+* MicroSD or USB key for create external boot partition, zfs have better performance if you create pool using whole disks.
 * ECC Memory.
 
 ## Install iso on USB key. For window, use tools like [rufus](https://rufus.akeo.ie/):  
@@ -24,17 +24,15 @@ sha256sum: b1dcc5613c9d4504459f0121e8c1f92cf54f3ce3f52d31625a02e2ed3bfa5795
     # dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx status=progress && sync
 
 ## Extra tools include in ISO:
-* duplicity
-* ecryptfs-utils
-* vim - emacs - nano - vi
+* duplicity - clonezilla
+* ecryptfs-utils - cryptsetup
+* vim - nano - vi
 * mc - ranger
 * w3m
 * git
-* privoxy
-* tor
+* privoxy - tor - proxychains
 * tmux - screen
 * zfs-0.6.5.8 - You must install the same version into gentoo else grub complain about probe filesystem...
-* zfs-0.6.5.8 compatible with >=kernel-4.4 
 
 **Start process with:**  
 [Gentoo-ZFS install](https://github.com/szorfein/Gentoo-ZFS/wiki/gentoo-zfs)  
