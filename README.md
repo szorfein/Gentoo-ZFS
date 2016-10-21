@@ -26,6 +26,8 @@ sha256sum: b1dcc5613c9d4504459f0121e8c1f92cf54f3ce3f52d31625a02e2ed3bfa5795
 ## Extra tools include in ISO:
 * duplicity
 * ecryptfs-utils
+* vim - emacs - nano - vi
+* mc - ranger
 * w3m
 * git
 * privoxy
