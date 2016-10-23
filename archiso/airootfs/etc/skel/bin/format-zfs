@@ -62,6 +62,7 @@ function ctrlParameter() {
 }
 
 function addRoot() {
+    if [ $ONLYDATASET ] ; then return 0; fi
     zpool create -o ashift=${ASHIFT_VALUE} -O atime=off -O compression=lz4 \
         -O normalization=formD \
         -O mountpoint=/ -O canmount=off \
@@ -90,7 +91,7 @@ function addVar() {
     zfs create -o com.sun:auto-snapshot=false \
         ${ZFS_NAME}/var/cache || return 1
     zfs create -o com.sun:auto-snapshot=false -o exec=on -o compression=off \
-        -o logbias=throughput ${ZFS_NAME}/var/tmp || return 1
+        -o sync=disabled ${ZFS_NAME}/var/tmp || return 1
     if [ $DATABASE_PSQL ] ; then
         zfs create -o recordsize=8k -o mountpoint=/var/lib/postgresql \
             -o primarycache=metadata ${ZFS_NAME}/var/postgres || return 1
@@ -155,7 +156,7 @@ function MakeTheJob() {
 
 OPTERR=0
 
-while getopts 'H:z:d:sS:am:r:PMvh' arg ; do
+while getopts 'H:z:d:sS:am:r:PMOvh' arg ; do
     case "${arg}" in
         H ) HOME_USERNAME="${OPTARG}" ;;
         z ) ZFS_NAME="${OPTARG}" ;;

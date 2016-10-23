@@ -3,7 +3,9 @@ Wiki for install a root ZFS system on gentoo, with systemd, grsec, hardened syst
 
 You will need download an archlinux with ZFS support, it's work perfectly.
 
-Archiso with ZFS support and custom script on [dropcanvas](http://dropcanvas.com/0hr5c)
+***Actually, iso do not contain all scripts for install gentoo faster, it just ontain ZFS, i need time for test and test again..., compile time is extremly long on my low system. but SOON i hope )***
+
+Archiso with ZFS support on [dropcanvas](http://dropcanvas.com/0hr5c)
 
 **Signature:**
 
@@ -28,7 +30,7 @@ sha256sum: b1dcc5613c9d4504459f0121e8c1f92cf54f3ce3f52d31625a02e2ed3bfa5795
 * ecryptfs-utils - cryptsetup
 * vim - nano - vi
 * mc - ranger
-* w3m
+* w3m - links - lynx
 * git
 * privoxy - tor - proxychains
 * tmux - screen
