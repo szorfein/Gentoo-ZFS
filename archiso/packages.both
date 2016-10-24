@@ -68,6 +68,7 @@ w3m
 links
 lynx
 privoxy
+proxychains-ng
 tor
 git
 duplicity
