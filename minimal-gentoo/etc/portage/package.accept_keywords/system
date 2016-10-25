@@ -1,4 +1,6 @@
 =sys-fs/zfs-0.6.5.8 **
+=sys-fs/udev-init-scripts-27
+=sys-libs/glibc-2.22-r4
 x11-base/xorg-server
 x11-base/xorg-drivers
 x11-drivers/xf86-input-keyboard
