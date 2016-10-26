@@ -3,14 +3,28 @@ Wiki for install a root ZFS system on gentoo, with systemd, grsec, hardened syst
 
 You will need download an archlinux with ZFS support, it's work perfectly.
 
-***Actually, iso do not contain all scripts for install gentoo faster, it just ontain ZFS, i need time for test and test again..., compile time is extremly long on my low system. but SOON i hope )***
+**New** Archiso with ZFS support on [dropcanvas](http://dropcanvas.com/8noxb)
 
-Archiso with ZFS support on [dropcanvas](http://dropcanvas.com/0hr5c)
+**Checksum:**
 
-**Signature:**
+    sha1sum : a32a9e51081c5608a2b8a7cd264cf29a6659b424
+    sha256sum: 3d21f0c848a7a30a3d291172c9fd529cd746ac55604a7f9c86e16f19f0597a5a
+    sha512sum: cd466a992dab3610174e5c11da79033bee2dfbec93314c78de7892c71293426ed76601e3f6acdec2831c1c60d9e74162f34c657106fc2ffef3881c333c156e8e
 
-sha1sum : b4c685f75bfbff38db71ff2956e194e4909708b8  
-sha256sum: b1dcc5613c9d4504459f0121e8c1f92cf54f3ce3f52d31625a02e2ed3bfa5795
+**Signature gpg:**
+
+    download iso
+    download https://github.com/szorfein/Gentoo-ZFS/blob/master/archlinux-2016-10.26-x86_64.iso.asc
+    $ gpg --recv-key 0x63CBFF51DD6C3FA6 --keyserver hkps.pool.sks-keyservers.net
+    $ gpg --verify archlinux-2016-10.26-x86_64.iso.asc
+    gpg: assuming signed data in 'archlinux-2016.10.26-x86_64.iso'
+    gpg: Signature made Wed Oct 26 10:53:06 2016 CEST
+    gpg:                using RSA key 0x41F8A185038B721C
+    gpg: Good signature from "Szorfein <szorfein@gmail.com>" [unknow]
+    gpg: WARNING: This key is not certified with a trusted signature!
+    gpg:          There is no indication that the signature belongs to the owner.
+    Primary key fingerprint: A691 553E FF1E 4654 16E3  038D 63CB FF51 DD6C 3FA6
+         Subkey fingerprint: E7EA 8EC9 69B7 9A4D 6944  4F4C 41F8 A185 038B 721C
 
 ## System Requirements
 * Cpu comptatible x86-64.
