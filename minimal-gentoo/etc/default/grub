@@ -29,6 +29,10 @@ GRUB_TIMEOUT=1
 # Boot with systemd instead of sysvinit (openrc)
 GRUB_CMDLINE_LINUX="init=/usr/lib/systemd/systemd"
 
+# Crypt system
+#GRUB_ENABLE_CRYPTODISK=y
+#GRUB_CMDLINE_LINUX="init=/usr/lib/systemd/systemd rd.luks=1 rd.luks.key=/key.gpg:LABEL=gentooboot rd.luks.uuid=luks-e57c4e30-7b2e-457a-af9b-3270d085aae2"
+
 # Append parameters to the linux kernel command line for non-recovery entries
 #GRUB_CMDLINE_LINUX_DEFAULT=""
 
