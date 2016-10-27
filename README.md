@@ -13,8 +13,9 @@ You will need download an archlinux with ZFS support, it's work perfectly.
 
 **Signature gpg:**
 
-    download iso
-    download [asc_file](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/archlinux-2016.10.26-x86_64.iso.asc)
+Download iso
+Download [asc_file](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/archlinux-2016.10.26-x86_64.iso.asc)
+
     $ gpg --recv-key 0x63CBFF51DD6C3FA6 --keyserver hkps.pool.sks-keyservers.net
     $ gpg --verify archlinux-2016-10.26-x86_64.iso.asc
     gpg: assuming signed data in 'archlinux-2016.10.26-x86_64.iso'
