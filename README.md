@@ -1,9 +1,11 @@
 # Gentoo-ZFS
-Wiki for install a root ZFS system on gentoo, with systemd, grsec, hardened system, UEFI or old BIOS.
+Wiki for install a root ZFS system on gentoo, with systemd, grsecurity patch.  
+**News for Initrd**, i have change for mkinitramfs-ll with grub2.
+Encryption if you need will use cryptsetup and gpg key to establish dual-factor security.
 
 You will need download an archlinux with ZFS support, it's work perfectly.
 
-**New** Archiso with ZFS support on [dropcanvas](http://dropcanvas.com/8noxb)
+**New** Archiso with ZFS and custom scripts on [dropcanvas](http://dropcanvas.com/8noxb)
 
 **Checksum:**
 
@@ -45,7 +47,7 @@ Download [asc_file](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master
 * ecryptfs-utils - cryptsetup
 * vim - nano - vi
 * mc - ranger
-* w3m - links - lynx
+* w3m - links - lynx - elinks
 * git
 * privoxy - tor - proxychains
 * tmux - screen
