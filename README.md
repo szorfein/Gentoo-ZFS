@@ -1,11 +1,18 @@
-# Gentoo-ZFS
-Wiki for install a root ZFS system on gentoo, with systemd, grsecurity patch.  
-**News for Initrd**, i have change for mkinitramfs-ll with grub2.
-Encryption if you need will use cryptsetup and gpg key to establish dual-factor security.
+# Hardened Gentoo on ZFS:
+Tired of go on a lot of link each time, i decided of all regroup in one page.  
+I will use this tools:
+* systemd
+* zfs
+* grsecurity path
+* mkinitramfs-ll
+* grub
 
-You will need download an archlinux with ZFS support, it's work perfectly.
+I have try to regroup all install case (BIOS, UEFI, boot on external support, RAID, LUKS...) onlyt for x86_64 architecture.
 
-**New** Archiso with ZFS and custom scripts on [dropcanvas](http://dropcanvas.com/8noxb)
+About iso, i have choose to create an [archiso](https://wiki.archlinux.org/index.php/Archiso) because it easy for integrate custom script, activate some service, etc...
+
+**New Archiso with ZFS support:**
+:arrow_forward: **[lastest iso on dropcanvas](http://dropcanvas.com/8noxb)**
 
 **Checksum:**
 
@@ -15,15 +22,15 @@ You will need download an archlinux with ZFS support, it's work perfectly.
 
 **Signature gpg:**
 
-Download iso
-Download [asc_file](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/archlinux-2016.10.26-x86_64.iso.asc)
+:arrow_forward: **[archiso](http://dropcanvas.com/8noxb)**
+:arrow_forward: **[asc_file](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/archlinux-2016.10.26-x86_64.iso.asc)**
 
     $ gpg --recv-key 0x63CBFF51DD6C3FA6 --keyserver hkps.pool.sks-keyservers.net
     $ gpg --verify archlinux-2016-10.26-x86_64.iso.asc
     gpg: assuming signed data in 'archlinux-2016.10.26-x86_64.iso'
     gpg: Signature made Wed Oct 26 10:53:06 2016 CEST
     gpg:                using RSA key 0x41F8A185038B721C
-    gpg: Good signature from "Szorfein <szorfein@gmail.com>" [unknow]
+    gpg: Good signature from "Szorfein <szorfein@gmail.com>" [unknown]
     gpg: WARNING: This key is not certified with a trusted signature!
     gpg:          There is no indication that the signature belongs to the owner.
     Primary key fingerprint: A691 553E FF1E 4654 16E3  038D 63CB FF51 DD6C 3FA6
