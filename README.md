@@ -12,7 +12,7 @@ I have try to regroup all install case (BIOS, UEFI, boot on external support, RA
 About iso, i have choose to create an [archiso](https://wiki.archlinux.org/index.php/Archiso) because it easy for integrate custom script, activate some service, etc...
 
 **New Archiso with ZFS support:**
-:arrow_forward: **[lastest iso on dropcanvas](http://dropcanvas.com/8noxb)**
+:arrow_forward: **[lastest iso on transfer](https://transfer.sh/nmEwS/archlinux-2016.10.26-x86_64.iso)**
 
 **Checksum:**
 
@@ -22,7 +22,7 @@ About iso, i have choose to create an [archiso](https://wiki.archlinux.org/index
 
 **Signature gpg:**
 
-:arrow_forward: **[archiso](http://dropcanvas.com/8noxb)**
+:arrow_forward: **[archiso](https://transfer.sh/nmEwS/archlinux-2016.10.26-x86_64.iso%)**
 :arrow_forward: **[asc_file](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/archlinux-2016.10.26-x86_64.iso.asc)**
 
     $ gpg --recv-key 0x63CBFF51DD6C3FA6 --keyserver hkps.pool.sks-keyservers.net
