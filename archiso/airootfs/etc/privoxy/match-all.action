@@ -10,29 +10,8 @@
 +change-x-forwarded-for{block} \
 +client-header-tagger{css-requests} \
 +client-header-tagger{image-requests} \
-+client-header-filter{hide-tor-exit-notation} \
-+deanimate-gifs{last} \
-+fast-redirects{check-decoded-url} \
-+filter{js-annoyances} \
-+filter{unsolicited-popups} \
-+filter{all-popups} \
-+filter{banners-by-link} \
-+filter{banners-by-size} \
-+filter{webbugs} \
-+filter{tiny-textforms} \
-+filter{shockwave-flash} \
-+filter{quicktime-kioskmode} \
-+filter{no-ping} \
-+filter{google} \
-+filter{yahoo} \
-+filter{msn} \
-+hide-accept-language{en-ca} \
++client-header-tagger{range-requests} \
 +hide-from-header{block} \
-+hide-if-modified-since{-30} \
-+hide-referrer{forge} \
-+hide-user-agent{Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_6; en-US) AppleWebkit/528.16 (KHTML, like gecko) Stainless/0.5.3 Safari/525.20.1} \
-+overwrite-last-modified{randomize} \
-+session-cookies-only \
 +set-image-blocker{pattern} \
 }
 / # Match all URLs

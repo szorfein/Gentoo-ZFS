@@ -1,6 +1,8 @@
 " Maintainer: szorfein <szorfein@gmail.com>
 " inspired by: Bram Moolenaar <Bram@vim.org>
 
+execute pathogen#infect()
+
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -107,5 +109,4 @@ set foldenable
 set foldmethod=manual
 
 "" Custom Color
-colorscheme nerv
-
+colorscheme darkest-space

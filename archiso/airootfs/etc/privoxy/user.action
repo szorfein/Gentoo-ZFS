@@ -8,11 +8,59 @@
 
 fragile     = -block -crunch-all-cookies -filter -fast-redirects -hide-referer -prevent-compression
 shop        = -crunch-all-cookies allow-popups
-
 myfilters   = +filter{html-annoyances} +filter{js-annoyances} +filter{all-popups}\
               +filter{webbugs} +filter{banners-by-size}
-
 allow-ads   = -block -filter{banners-by-size} -filter{banners-by-link}
+
+standardCautious = \
++change-x-forwarded-for{block} \
++client-header-tagger{css-requests} \
++client-header-tagger{image-requests} \
++client-header-tagger{range-requests} \
++hide-from-header{block} \
++set-image-blocker{blank} \
+
+standardMedium = \
++change-x-forwarded-for{block} \
++deanimate-gifs{last} \
++filter{refresh-tags} \
++filter{img-reorder} \
++filter{banners-by-size} \
++filter{webbugs} \
++filter{jumping-windows} \
++filter{ie-exploits} \
++hide-from-header{block} \
++hide-referrer{conditional-block} \
++session-cookies-only \
++set-image-blocker{pattern}
+
+standardAdvanced = \
++change-x-forwarded-for{block} \
++client-header-tagger{css-requests} \
++client-header-tagger{image-requests} \
++crunch-if-none-match \
++crunch-outgoing-cookies \
++crunch-incoming-cookies \
++deanimate-gifs{last} \
++fast-redirects{check-decoded-url} \
++filter{html-annoyances} \
++filter{content-cookies} \
++filter{refresh-tags} \
++filter{img-reorder} \
++filter{banners-by-size} \
++filter{banners-by-link} \
++filter{webbugs} \
++filter{jumping-windows} \
++filter{frameset-borders} \
++filter{quicktime-kioskmode} \
++hide-if-modified-since{-60} \
++hide-from-header{block} \
++hide-referrer{conditional-block} \
++overwrite-last-modified{randomize} \
++set-image-blocker{pattern}
+
+{standardAdvanced}
+/
 
 { -filter{all-popups} }
 .banking.example.com
@@ -24,7 +72,6 @@ stupid-server.example.com/
 www.example.com/nasty-ads/sponsor.gif
 
 { +set-image-blocker{blank} }
-#/
 
 { +block{Pownded } }
 .oclaserver.
@@ -79,14 +126,8 @@ www.example.com/nasty-ads/sponsor.gif
 .fncnetl.
 
 { +block-as-image }
-.friendly*.
-.doubleclick.net
-ar.atwola.com/
 
 { fragile }
-.dotshare.it
-.deviantart.
-.codeschool.
 
 { +block{google.} }
 .googlesyndication.
@@ -98,3 +139,4 @@ news.google.com/news/url.*&url=http.*&
 
 {+block{Facebook "like" and similar tracking URLs.}}
 www.facebook.com/(extern|plugins)/(login_status|like(box)?|activity|fan)\.php
+

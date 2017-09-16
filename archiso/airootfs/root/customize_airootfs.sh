@@ -8,10 +8,16 @@ locale-gen
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
 usermod -s /usr/bin/zsh root
+
 cp -aT /etc/skel/ /root/
 chmod 700 /root
 chmod 700 /root/.gnupg
 chmod 600 /root/.gnupg/*
+
+# install vim color
+mkdir -p /root/.vim/{bundle,autoload} && \
+curl -LSso /root/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim && \
+git clone https://github.com/szorfein/darkest-space /root/.vim/bundle/darkest-space
 
 sed -i 's/#\(PermitRootLogin \).\+/\1yes/' /etc/ssh/sshd_config
 sed -i "s/#Server/Server/g" /etc/pacman.d/mirrorlist
