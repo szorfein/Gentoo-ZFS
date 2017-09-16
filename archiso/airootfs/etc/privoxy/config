@@ -21,7 +21,6 @@ buffer-limit 4096
 enable-proxy-authentication-forwarding 0
 
 forward-socks5t   /               127.0.0.1:9050 .
-forward 192.168.*.*:80 .
 forward         192.168.*.*/     .
 forward            10.*.*.*/     .
 forward           127.*.*.*/     .

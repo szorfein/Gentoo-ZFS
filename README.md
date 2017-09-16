@@ -1,55 +1,61 @@
 # Hardened Gentoo on ZFS:
-Tired of go on a lot of link each time, i decided of all regroup in one page.  
-I will use this tools:
-* systemd
-* zfs
-* grsecurity path
-* mkinitramfs-ll
-* grub
+
+Tired of go on a lot of link each time, i decided of all regroup in a massive tutorial of ~999 lines.
+I will mainly use these tools:
++ ZFS
++ systemd [alrealy treated of heretic :)]
++ grsecurity path [soon ended :(]
++ mkinitramfs-ll
++ grub
 
 I have try to regroup all install case (BIOS, UEFI, boot on external support, RAID, LUKS...) only for x86_64 architecture.
 
-About iso, i have choose to create an [archiso](https://wiki.archlinux.org/index.php/Archiso) because it easy for integrate custom script, activate some service, etc...
-
-**New Archiso with ZFS support:**
-:arrow_forward: **[lastest iso on transfer](https://transfer.sh/NF1ST/archlinux-2016.10.26-x86_64.iso)
-
-**Checksum:**
-
-    sha1sum : a32a9e51081c5608a2b8a7cd264cf29a6659b424
-    sha256sum: 3d21f0c848a7a30a3d291172c9fd529cd746ac55604a7f9c86e16f19f0597a5a
-    sha512sum: cd466a992dab3610174e5c11da79033bee2dfbec93314c78de7892c71293426ed76601e3f6acdec2831c1c60d9e74162f34c657106fc2ffef3881c333c156e8e
-
-**Signature gpg:**
-
-:arrow_forward: **[archiso](https://transfer.sh/NF1ST/archlinux-2016.10.26-x86_64.iso)**
-:arrow_forward: **[asc_file](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/archlinux-2016.10.26-x86_64.iso.asc)**
-
-    $ gpg --recv-key 0x63CBFF51DD6C3FA6 --keyserver hkps.pool.sks-keyservers.net
-    $ gpg --verify archlinux-2016-10.26-x86_64.iso.asc
-    gpg: assuming signed data in 'archlinux-2016.10.26-x86_64.iso'
-    gpg: Signature made Wed Oct 26 10:53:06 2016 CEST
-    gpg:                using RSA key 0x41F8A185038B721C
-    gpg: Good signature from "Szorfein <szorfein@gmail.com>" [unknown]
-    gpg: WARNING: This key is not certified with a trusted signature!
-    gpg:          There is no indication that the signature belongs to the owner.
-    Primary key fingerprint: A691 553E FF1E 4654 16E3  038D 63CB FF51 DD6C 3FA6
-         Subkey fingerprint: E7EA 8EC9 69B7 9A4D 6944  4F4C 41F8 A185 038B 721C
+About iso, i have choose to create an [archiso](https://wiki.archlinux.org/index.php/Archiso) because it easy for integrate custom script, activate some service, etc... and no problem for install gentoo or an another system.
 
 ## System Requirements
+
 * Cpu comptatible x86-64.
 * 8G disk storage available
 * 2G memory minimum
     
 **Optional:**
-* MicroSD or USB key for create external boot partition, zfs have better performance if you create pool using whole disks.
+
+* MicroSD or USB key for create an external boot partition.
 * ECC Memory.
+* SSD (used as cache drive, named L2ARC).
+
+### Download iso:
+
+Because i upload file on [transfer.sh](https://transfer.sh), the link is available only 14 days.  
+If the link is no longer available and i'm still alive, i would upload new link soon, don't worries :).
+
+:arrow_forward: [archlinux-zfs](https://transfer.sh/jWIXW/archlinux-ZFS-2017.09.16-x86_64.iso)  
+:arrow_forward: [archlinux-zfs.asc](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/archlinux-ZFS-2017.09.16-x86_64.iso.asc)
+
+**Checksums:**
+
+    md5: be197fdced762bddeec4ba64726ff550  
+    sha1: 0b188a2af4436ba37ba200c97c88ebe698017aca  
+
+**Gpg:**
+
+    $ gpg --recv-key 0x97FB6CECA17FF364 --keyserver hkps.pool.sks-keyservers.net
+    $ gpg --verify archlinux-ZFS-2017.09.16-x86_64.iso.asc
+    gpg: assuming signed data in 'archlinux-ZFS-2017.09.16-x86_64.iso'
+    gpg: Signature made Sat Sep 16 19:27:10 2017 CEST
+    gpg:                using RSA key 6485CD4AD55FC2F767EE783597FB6CECA17FF364
+    gpg: Good signature from "Szorfein <szorfein@gmail.com>" [unknown]
+    gpg: WARNING: This key is not certified with a trusted signature!
+    gpg:          There is no indication that the signature belongs to the owner.
+    Primary key fingerprint: 346E BDED 037B 1949 013D  3576 0F15 D984 5548 7B76
+         Subkey fingerprint: 6485 CD4A D55F C2F7 67EE  7835 97FB 6CEC A17F F364
 
 ## Install iso on USB key. For window, use tools like [rufus](https://rufus.akeo.ie/):  
 
     # dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx status=progress && sync
 
 ## Extra tools include in ISO:
+
 * duplicity - clonezilla
 * ecryptfs-utils - cryptsetup
 * vim - nano - vi
@@ -58,7 +64,11 @@ About iso, i have choose to create an [archiso](https://wiki.archlinux.org/index
 * git
 * privoxy - tor - proxychains
 * tmux - screen
-* zfs-0.6.5.8 - You must install the same version into gentoo else grub complain about probe filesystem...
+* zfs-0.7.1 - You must install the same version else grub complains about probe filesystem...
 
-**Start process with:**  
-[Gentoo-ZFS install](https://github.com/szorfein/Gentoo-ZFS/wiki/gentoo-zfs)  
+**Boot on the key & start the tutorial:**  
+[Gentoo-ZFS wiki](https://github.com/szorfein/Gentoo-ZFS/wiki/gentoo-zfs)  
+
+### Trouble
+
+If you found any problem about this wiki, thx, report an issue.  
