@@ -27,10 +27,11 @@ About iso, i have choose to create an [archiso](https://wiki.archlinux.org/index
 ### Download iso:
 
 Because i upload file on [transfer.sh](https://transfer.sh), the link is available only 14 days.  
-If the link is no longer available and i'm still alive, i would upload new link soon, don't worries :).
+If the link is no longer available and i'm still alive, i would upload new link soon, don't worry :).
 
 :arrow_forward: [archlinux-zfs](https://transfer.sh/jWIXW/archlinux-ZFS-2017.09.16-x86_64.iso)  
-:arrow_forward: [archlinux-zfs.asc](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/archlinux-ZFS-2017.09.16-x86_64.iso.asc)
+:arrow_forward: [archlinux-zfs.asc](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/archlinux-ZFS-2017.09.16-x86_64.iso.asc)  
+:arrow_forward: [szorfein.gpg](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/szorfein.gpg)
 
 **Checksums:**
 
@@ -39,7 +40,7 @@ If the link is no longer available and i'm still alive, i would upload new link 
 
 **Gpg:**
 
-    $ gpg --recv-key 0x97FB6CECA17FF364 --keyserver hkps.pool.sks-keyservers.net
+    $ gpg --recv-key szorfein.gpg
     $ gpg --verify archlinux-ZFS-2017.09.16-x86_64.iso.asc
     gpg: assuming signed data in 'archlinux-ZFS-2017.09.16-x86_64.iso'
     gpg: Signature made Sat Sep 16 19:27:10 2017 CEST
