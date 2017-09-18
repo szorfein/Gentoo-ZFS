@@ -1,12 +1,14 @@
 # Hardened Gentoo on ZFS:
 
-Tired of go on a lot of link each time, i decided of all regroup in a massive tutorial of ~999 lines.
+Tired of go on a lot of link each time, i decided of all regroup in a massive tutorial.
 I will mainly use these tools:
+
 + ZFS
-+ systemd [alrealy treated of heretic :)]
-+ grsecurity path [soon ended :(]
-+ mkinitramfs-ll
-+ grub
++ Systemd [alrealy treated of heretic]
++ Grsecurity path [soon ended...]
++ Mkinitramfs-ll
++ Grub
++ SELinux
 
 I have try to regroup all install case (BIOS, UEFI, boot on external support, RAID, LUKS...) only for x86_64 architecture.
 
@@ -68,7 +70,7 @@ If the link is no longer available and i'm still alive, i would upload new link 
 * zfs-0.7.1 - You must install the same version else grub complains about probe filesystem...
 
 **Boot on the key & start the tutorial:**  
-[Gentoo-ZFS wiki](https://github.com/szorfein/Gentoo-ZFS/wiki/gentoo-zfs)  
+[Gentoo-ZFS wiki](https://github.com/szorfein/Gentoo-ZFS/wiki)  
 
 ### Trouble
 
