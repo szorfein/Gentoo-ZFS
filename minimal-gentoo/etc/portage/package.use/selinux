@@ -1,1 +1,2 @@
-sec-policy/selinux-base-policy unconfined
+sec-policy/selinux-base systemd
+sec-policy/selinux-base-policy systemd
