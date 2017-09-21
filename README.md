@@ -4,8 +4,8 @@ Tired of go on a lot of link each time, i decided of all regroup in a massive tu
 I will mainly use these tools:
 
 + ZFS
-+ Systemd [alrealy treated of heretic]
-+ Grsecurity path [soon ended...]
++ Systemd
++ Grsecurity
 + Mkinitramfs-ll
 + Grub
 + SELinux
