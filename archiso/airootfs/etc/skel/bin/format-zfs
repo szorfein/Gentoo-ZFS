@@ -135,8 +135,9 @@ function addOpt() {
 function addSwap() {
     if [ $DISK_SWAP ] ; then
         zfs create -V ${SWAP_SIZE} -b $(getconf PAGESIZE) \
+            -o compression=zle \
             -o logbias=throughput -o sync=always \
-            -o primarycache=metadata \
+            -o primarycache=metadata -o secondarycache=none \
             -o com.sun:auto-snapshot=false ${ZFS_NAME}/swap || return 1
         echo "swap created"
     fi
