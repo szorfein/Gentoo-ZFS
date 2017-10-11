@@ -8,6 +8,5 @@ x11-drivers/xf86-input-evdev
 #x11-drivers/xf86-video-intel
 #x11-drivers/xf86-video-nouveau
 #x11-drivers/xf86-video-intel
-=sys-libs/glibc-2.26 **
-=sys-devel/gcc-7.2.0 **
-=sys-libs/glibc-2.26.r1 **
+=sys-devel/gcc-5.4.0-r3 **
+=sys-libs/glibc-2.23-r4 **

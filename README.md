@@ -58,7 +58,7 @@ If the link is no longer available and i'm still alive, i would upload new link 
 
     # dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx status=progress && sync
 
-## Extra tools include in ISO:
+## Extra tools include in ISO:
 
 * duplicity - clonezilla
 * ecryptfs-utils - cryptsetup
