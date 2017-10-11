@@ -1,1 +1,2 @@
 sys-fs/zfs rootfs kernel-builtin
+sys-fs/zfs-kmod rootfs
