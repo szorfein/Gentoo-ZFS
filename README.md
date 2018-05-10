@@ -32,27 +32,27 @@ About iso, i have choose to create an [archiso](https://wiki.archlinux.org/index
 Because i upload file on [transfer.sh](https://transfer.sh), the link is available only 14 days.  
 If the link is no longer available and i'm still alive, i would upload new link soon, don't worry :).
 
-:arrow_forward: [archlinux-zfs](https://transfer.sh/ar7KV/archlinux-ZFS-2017.09.16-x86_64.iso)  
-:arrow_forward: [archlinux-zfs.asc](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/archlinux-ZFS-2017.09.16-x86_64.iso.asc)  
-:arrow_forward: [szorfein.gpg](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/szorfein.gpg)
+:arrow_forward: [archlinux-zfs](https://transfer.sh/w0u9a/archlinux-2018.05.10-x86_64.iso)  
+:arrow_forward: [archlinux-zfs.sig](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/archlinux-2018.05.10-x86_64.iso.sig)  
+:arrow_forward: [szorfein-last-key.gpg](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/szorfein-last-key.gpg)
 
 **Checksums:**
 
-    md5: be197fdced762bddeec4ba64726ff550  
-    sha1: 0b188a2af4436ba37ba200c97c88ebe698017aca  
+    md5: 454d1691fa3f0096fb7a27555630489f  
+    sha1: fdb91bbb10d1d203614185d8a380569ec5eb6698  
 
 **Gpg:**
 
-    $ gpg --recv-key szorfein.gpg
-    $ gpg --verify archlinux-ZFS-2017.09.16-x86_64.iso.asc
-    gpg: assuming signed data in 'archlinux-ZFS-2017.09.16-x86_64.iso'
-    gpg: Signature made Sat Sep 16 19:27:10 2017 CEST
-    gpg:                using RSA key 6485CD4AD55FC2F767EE783597FB6CECA17FF364
+    $ gpg --recv-key szorfein-last-key.gpg
+    $ gpg --verify archlinux-2018.05.10-x86_64.iso.sig
+    gpg: assuming signed data in 'archlinux-2018.05.10-x86_64.iso'
+    gpg: Signature made Thu May 10 11:07:45 2018 CEST
+    gpg:                using EDDSA key A81BA6E0A83E4C5E33ABB9B5A38E87A284B87751 
     gpg: Good signature from "Szorfein <szorfein@gmail.com>" [unknown]
     gpg: WARNING: This key is not certified with a trusted signature!
     gpg:          There is no indication that the signature belongs to the owner.
-    Primary key fingerprint: 346E BDED 037B 1949 013D  3576 0F15 D984 5548 7B76
-         Subkey fingerprint: 6485 CD4A D55F C2F7 67EE  7835 97FB 6CEC A17F F364
+    Primary key fingerprint: 91D1 6ADF CDDD 7959 E25F  2164 8838 FC91 D890 EB06
+         Subkey fingerprint: A81B A6E0 A83E 4C5E 33AB  B9B5 A38E 87A2 84B8 7754
 
 ## Install iso on USB key. For window, use tools like [rufus](https://rufus.akeo.ie/):  
 
@@ -68,7 +68,7 @@ If the link is no longer available and i'm still alive, i would upload new link 
 * git
 * privoxy - tor - proxychains
 * tmux - screen
-* zfs-0.7.1 - You must install the same version else grub complains about probe filesystem...
+* zfs-0.7.8 - You must install the same version else grub complains about probe filesystem...
 
 **Boot on the key & start the tutorial:**  
 [Gentoo-ZFS wiki](https://github.com/szorfein/Gentoo-ZFS/wiki)  
