@@ -68,7 +68,6 @@ If the link is no longer available and i'm still alive, i would upload new link 
 * git
 * privoxy - tor - proxychains
 * tmux - screen
-* zfs-0.7.8 - You must install the same version else grub complains about probe filesystem...
 
 **Boot on the key & start the tutorial:**  
 [Gentoo-ZFS wiki](https://github.com/szorfein/Gentoo-ZFS/wiki)  
