@@ -5,11 +5,12 @@ I will mainly use these tools:
 
 + ZFS
 + Systemd
-+ Grsecurity
 + Mkinitramfs-ll
 + Grub
 + SELinux (optional)
 + Cryptsetup (optional)
++ Grsecurity (optional)
++ AppArmor (optional)
 
 I have try to regroup all install case (BIOS, UEFI, boot on external support, RAID, LUKS...) only for x86_64 architecture.
 

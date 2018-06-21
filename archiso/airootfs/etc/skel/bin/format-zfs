@@ -75,19 +75,17 @@ function addRoot() {
 
 function addSubRoot() {
     zfs create -o mountpoint=none -o canmount=off ${ZFS_NAME}/ROOT || return 1
-    zfs create -o mountpoint=/ ${ZFS_NAME}/ROOT/${ROOT_NAME} || return 1
+    zfs create -o mountpoint=/ -o setuid=on devices=on -o exec=on ${ZFS_NAME}/ROOT/${ROOT_NAME} || return 1
     echo "gentoo created"
 }
 
 function addUsr() {
-    zfs create -o canmount=off -o exec=on -o setuid=on ${ZFS_NAME}/usr || return 1
-    zfs create -o setuid=off ${ZFS_NAME}/usr/src || return 1
-    zfs create -o setuid=off -o exec=off ${ZFS_NAME}/usr/portage || return 1
+    zfs create -o devices=off ${ZFS_NAME}/usr || return 1
     echo "usr created"
 }
 
 function addVar() {
-    zfs create -o canmount=off -o exec=off -o setuid=off ${ZFS_NAME}/var || return 1
+    zfs create -o devices=off -o exec=off ${ZFS_NAME}/var || return 1
     zfs create -o com.sun:auto-snapshot=false \
         ${ZFS_NAME}/var/cache || return 1
     zfs create -o com.sun:auto-snapshot=false -o exec=on -o compression=off \
@@ -105,15 +103,10 @@ function addVar() {
     echo "var/{log,cache,tmp} created"
 }
 
-function addOther() {
-    zfs create -o exec=on -o setuid=on ${ZFS_NAME}/bin || return 1
-    echo "bin create"
-}
-
 function addHome() {
-    zfs create -o setuid=off -o exec=off ${ZFS_NAME}/home || return 1
+    zfs create -o setuid=off -o exec=off -o devices=off ${ZFS_NAME}/home || return 1
     zfs create -o mountpoint=/root \
-        -o exec=on ${ZFS_NAME}/home/root || return 1
+        ${ZFS_NAME}/home/root || return 1
     if [ $HOME_USERNAME ] ; then 
         zfs create -o exec=on ${ZFS_NAME}/home/${HOME_USERNAME} || return 1; 
         echo "home/${HOME_USERNAME} created"
@@ -123,12 +116,10 @@ function addHome() {
 }
 
 function addOpt() {
-    zfs create -o exec=off -o setuid=off ${ZFS_NAME}/opt || return 1
+    zfs create -o devices=off ${ZFS_NAME}/opt || return 1
     #zfs create ${ZFS_NAME}/opt/musics || return 1
     #zfs create ${ZFS_NAME}/opt/games || return 1
     #zfs create ${ZFS_NAME}/opt/backups || return 1
-    #zfs create -o exec=on -o setuid=on ${ZFS_NAME}/opt/x86system || return 1
-    #zfs create -o exec=on -o setuid=on ${ZFS_NAME}/opt/vivaldi-snapshot || return 1
     echo "opt created"
 }
 
@@ -149,7 +140,6 @@ function MakeTheJob() {
     if ! addSubRoot ; then echo "Problem with subroot"; return 1; fi
     if ! addUsr ; then echo "Problem with usr"; return 1; fi
     if ! addVar ; then echo "Problem with var"; return 1; fi
-    if ! addOther ; then echo "Problem with portage"; return 1; fi
     if ! addHome ; then echo "Problem with home"; return 1; fi
     if ! addOpt ; then echo "Problem with opt"; return 1; fi
     if ! addSwap ; then echo "Problem with swap"; return 1; fi
