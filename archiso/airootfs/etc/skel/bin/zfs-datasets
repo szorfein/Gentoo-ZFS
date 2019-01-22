@@ -1,0 +1,169 @@
+#!/bin/sh
+
+####################################################
+# Vars
+
+CLEAR=false
+ZPOOL=""
+USERNAME=""
+
+####################################################
+# Funcs
+
+die() {
+  echo "[-] $1"
+  exit 1
+}
+
+cVol() {
+  local com="$1"
+  $($com)
+  if [ $? -eq 0 ] ; then
+    echo "[+] comm $com success"
+  else
+    die "Something is wrong with '$1'"
+  fi
+}
+
+usage() {
+  echo "$0 --zpool-name [ARG] --username [ARG]   Add datasets to zpool name with /home/username"
+  echo "$0 --zpool-name [ARG] --username [ARG] --clear    Remove all datasets created with this script"
+ 
+  echo -e "\nex: $0 --zpool-name zfsforninja --username alice"
+  exit 0
+}
+
+####################################################
+# Command line parser
+
+while [ "$#" -gt 0 ] ; do
+  case "$1" in 
+    -z | --zpool-name )
+      ZPOOL="$2"
+      shift
+      shift
+      ;;
+    -u | --username )
+      USERNAME="$2"
+      shift
+      shift
+      ;;
+    -c | --clear )
+      CLEAR=true
+      shift
+      ;;
+    -h | --help )
+      usage
+      shift
+      ;;
+    *)
+      die "Unknow argument $1"
+      ;;
+  esac
+done
+
+####################################################
+# Main funcs
+
+createVols() {
+
+####################################################
+# Swap
+
+cVol "zfs create -V 2G -b $(getconf PAGESIZE)
+  -o compression=zle
+  -o logbias=throughput -o sync=always
+  -o primarycache=metadata -o secondarycache=none
+  -o com.sun:auto-snapshot=false $ZPOOL/swap"
+
+####################################################
+# Root
+
+cVol "zfs create -o mountpoint=none -o canmount=off $ZPOOL/ROOT"
+cVol "zfs create -o mountpoint=/ -o setuid=on 
+  -o devices=on -o exec=on -o atime=off 
+  $ZPOOL/ROOT/gentoo"
+
+####################################################
+# VAR
+
+cVol "zfs create -o devices=off -o exec=off zfsforninja/var"
+cVol "zfs create -o com.sun:auto-snapshot=false zfsforninja/var/cache"
+cVol "zfs create -o acltype=posixacl -o xattr=sa
+  $ZPOOL/var/log"
+# We enable exec=on to compile program
+cVol "zfs create -o com.sun:auto-snapshot=false 
+  -o sync=disabled -o exec=on 
+  -o primarycache=metadata $ZPOOL/var/tmp"
+
+####################################################
+# USR
+
+# setuid=on on /usr to use sudo, passwd and other programs
+cVol "zfs create -o exec=on -o setuid=on $ZPOOL/usr"
+
+####################################################
+# HOME
+
+cVol "zfs create $ZPOOL/home"
+cVol "zfs create -o exec=on $ZPOOL/home/$USERNAME"
+cVol "zfs create -o mountpoint=/root $ZPOOL/home/root"
+
+####################################################
+# Databases
+
+cVol "zfs create -o recordsize=8K -o primarycache=metadata 
+  -o mountpoint=/var/lib/postgresql $ZPOOL/var/psql"
+cVol "zfs create -o recordsize=16K 
+  -o mountpoint=/var/lib/mysql $ZPOOL/var/mysql"
+
+####################################################
+# OPT
+
+# setuid=on and exec=on on /opt to use Virtualbox, vivaldi, brave, etc...
+cVol "zfs create -o setuid=on -o exec=on $ZPOOL/opt"
+# Add musics dir
+cVol "zfs create -o primarycache=metadata
+  -o setuid=off -o exec=off $ZPOOL/opt/musics"
+# Torrent 
+cVol "zfs create -o primarycache=metadata
+  -o recordsize=16k -o setuid=off -o exec=off
+  $ZPOOL/opt/torrents"
+}
+
+clearVols() {
+  cVol "zfs destroy $ZPOOL/swap"
+  cVol "zfs destroy $ZPOOL/ROOT/gentoo"
+  cVol "zfs destroy $ZPOOL/ROOT"
+  cVol "zfs destroy $ZPOOL/var/tmp"
+  cVol "zfs destroy $ZPOOL/var/log"
+  cVol "zfs destroy $ZPOOL/var/cache"
+  cVol "zfs destroy $ZPOOL/var/mysql"
+  cVol "zfs destroy $ZPOOL/var/psql"
+  cVol "zfs destroy $ZPOOL/var"
+  cVol "zfs destroy $ZPOOL/usr"
+  cVol "zfs destroy $ZPOOL/opt"
+  cVol "zfs destroy $ZPOOL/home/root"
+  cVol "zfs destroy $ZPOOL/home/$USERNAME"
+  cVol "zfs destroy $ZPOOL/home"
+  cVol "zfs destroy $ZPOOL/opt/torrents"
+  cVol "zfs destroy $ZPOOL/opt/musics"
+  cVol "zfs destroy $ZPOOL/opt"
+}
+
+####################################################
+# Main
+
+if [[ $CLEAR == true ]] &&
+  [[ ! -z $ZPOOL ]] &&
+  [[ ! -z $USERNAME ]] ; then
+clearVols
+
+elif [[ $CLEAR == false ]] &&
+  [[ ! -z $ZPOOL ]] &&
+  [[ ! -z $USERNAME ]] ; then
+createVols
+
+else
+  usage
+fi

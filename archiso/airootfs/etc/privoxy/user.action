@@ -5,34 +5,11 @@
  allow-popups       = -filter{all-popups} -filter{unsolicited-popups}
 +block-as-image     = +block{Blocked image request.} +handle-as-image
 -block-as-image     = -block
-
 fragile     = -block -crunch-all-cookies -filter -fast-redirects -hide-referer -prevent-compression
 shop        = -crunch-all-cookies allow-popups
 myfilters   = +filter{html-annoyances} +filter{js-annoyances} +filter{all-popups}\
               +filter{webbugs} +filter{banners-by-size}
 allow-ads   = -block -filter{banners-by-size} -filter{banners-by-link}
-
-standardCautious = \
-+change-x-forwarded-for{block} \
-+client-header-tagger{css-requests} \
-+client-header-tagger{image-requests} \
-+client-header-tagger{range-requests} \
-+hide-from-header{block} \
-+set-image-blocker{blank} \
-
-standardMedium = \
-+change-x-forwarded-for{block} \
-+deanimate-gifs{last} \
-+filter{refresh-tags} \
-+filter{img-reorder} \
-+filter{banners-by-size} \
-+filter{webbugs} \
-+filter{jumping-windows} \
-+filter{ie-exploits} \
-+hide-from-header{block} \
-+hide-referrer{conditional-block} \
-+session-cookies-only \
-+set-image-blocker{pattern}
 
 standardAdvanced = \
 +change-x-forwarded-for{block} \
@@ -62,81 +39,19 @@ standardAdvanced = \
 {standardAdvanced}
 /
 
+{ allow-all-cookies }
+
 { -filter{all-popups} }
-.banking.example.com
 
 { -filter }
-stupid-server.example.com/
 
 { +block{Nasty ads.} }
 www.example.com/nasty-ads/sponsor.gif
-
-{ +set-image-blocker{blank} }
-
-{ +block{Pownded } }
-.oclaserver.
-.facebook.
-.mgid.
-.liveint*.
-.ebz.
-.trade*.
-.*exchang*.
-.dec*.science
-.ad[0-9]*.
-.pub[0-9]?*.
-.pagefair.
-.*teev*.
-.*cash*.
-.ad-*.
-.*promo*.
-.science.
-.*festival*.
-.*friend*.
-.*easy*.
-.oopt.
-.venturead.
-.*click*.
-.*taboo*.
-.amazonaws.
-.adobe.
-.snw.
-.snv.
-.filesdock.
-.*viral*.
-.bright*.
-.*exclus*.
-.downloat*.
-.*great*.
-.*work*.
-.wall*.
-.*atm.
-.xyz*.
-.adsb*.
-.millio*.
-.*dream*.
-.104.197.10.88.
-.*reward*.
-.*exper*.
-.*klnk*.
-.*option*.
-.*cops*.
-.*blis*.
-.*getbook.
-.xb11*.
-.fncnetl.
 
 { +block-as-image }
 
 { fragile }
 
-{ +block{google.} }
-.googlesyndication.
-.googleadservices.
-.googletagservices.
+{ allow-ads }
 
-{+fast-redirects{check-decoded-url}}
-news.google.com/news/url.*&url=http.*&
-
-{+block{Facebook "like" and similar tracking URLs.}}
-www.facebook.com/(extern|plugins)/(login_status|like(box)?|activity|fan)\.php
-
+{ +set-image-blocker{blank} }
