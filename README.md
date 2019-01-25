@@ -45,7 +45,7 @@ If the link is no longer available and you're tired of wait, you can create your
 
     $ wget https://raw.githubusercontent.com/szorfein/dotfiles/master/szorfein.gpg
     $ gpg --recv-key szorfein.gpg
-    $ gpg --verify archlinux-2018.05.10-x86_64.iso.sig
+    $ gpg --verify archlinux-ZFS-2019.01.25-x86_64.iso.sig
 
 ```txt
 gpg: assuming signed data in 'archlinux-ZFS-2019.01.25-x86_64.iso'
