@@ -12,7 +12,7 @@ Xft.rgba:       rgb
 !--------------------------------------------
 ! General Colors
 
-#include "/root/.colors/luna"
+#include "/root/.colors/sombra"
 
 !-------------------------------------------
 ! Man pages colors
