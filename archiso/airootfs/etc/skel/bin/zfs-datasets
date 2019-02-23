@@ -111,8 +111,9 @@ cVol "zfs create -o mountpoint=/root $ZPOOL/home/root"
 
 ####################################################
 # Databases
+# Ref: http://www.open-zfs.org/wiki/Performance_tuning
 
-cVol "zfs create -o recordsize=8K -o primarycache=metadata 
+cVol "zfs create -o recordsize=8K -o logbias=throughput
   -o mountpoint=/var/lib/postgresql $ZPOOL/var/psql"
 cVol "zfs create -o recordsize=16K 
   -o mountpoint=/var/lib/mysql $ZPOOL/var/mysql"
