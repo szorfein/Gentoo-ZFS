@@ -2,15 +2,19 @@
 
 Tired of go on a lot of link each time, i decided of all regroup in a massive tutorial.  
 This howto is a mix between the [gentoo handbook](https://wiki.gentoo.org/wiki/Handbook:AMD64), [sasaki handbook](https://wiki.gentoo.org/wiki/Sakaki%27s_EFI_Install_Guide) and many tips found on the web.  
-I will mainly use these tools:
+We going to look how to set up:
 
 + ZFS
 + Systemd
-+ Mkinitramfs-ll
++ Eclosion (A minimal initramfs)
 + Grub2 or efistub
-+ Cryptsetup (optional)
-+ AppArmor (optional) (Not Yet Ready)
-+ SELinux (optional) (Not Yet Ready)
++ CPU flags
++ The kernel source
++ Full disk encryption with Cryptsetup and gpg
++ Secure Boot (generate key with [cryptboot](https://github.com/xmikos/cryptboot))
++ Protect your privacy ( paranoid-ninja, tor and ssh )
++ AppArmor 
++ SELinux (Not Yet Ready)
 
 I have try to regroup all install case (BIOS, UEFI, boot on external support, RAID, LUKS...) only for x86_64 architecture.
 
@@ -33,9 +37,8 @@ About iso, i have choose to create an [archiso](https://wiki.archlinux.org/index
 Because i upload file on [transfer.sh](https://transfer.sh), the link is available only 14 days.  
 If the link is no longer available and you're tired of wait, you can create your own iso by follow this [HOWTO](https://szorfein.github.io/zfs/make-your-own-archiso-with-ZFS/).
 
-:arrow_forward: [archlinux-zfs.iso](https://transfer.sh/uUsmh/archlinux-2019.02.05-x86_64.iso)  
+:arrow_forward: [archlinux-zfs.iso](https://transfer.sh/r5V83/archlinux-2019.02.05-x86_64.iso)  
 :arrow_forward: [archlinux-zfs.sig](https://raw.githubusercontent.com/szorfein/Gentoo-ZFS/master/archlinux-2019.02.05-x86_64.iso.sig)  
-:arrow_forward: [szorfein.gpg](https://raw.githubusercontent.com/szorfein/dotfiles/master/szorfein.gpg)
 
 **Checksums:**
 
