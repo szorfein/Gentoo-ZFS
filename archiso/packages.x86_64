@@ -60,11 +60,9 @@ vpnc
 wget
 wireless-regdb
 wireless_tools
-wpa_actiond
 wvdial
 xl2tpd
 archzfs-linux-lts
-spl-linux-lts
 privoxy
 tor
 tmux
