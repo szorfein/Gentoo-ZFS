@@ -87,14 +87,18 @@ cVol "zfs create -o mountpoint=/ -o setuid=on
 ####################################################
 # VAR
 
-cVol "zfs create -o devices=off -o exec=off zfsforninja/var"
-cVol "zfs create -o com.sun:auto-snapshot=false zfsforninja/var/cache"
-cVol "zfs create -o acltype=posixacl -o xattr=sa
-  $ZPOOL/var/log"
+cVol "zfs create -o devices=off -o exec=off $ZPOOL/var"
+cVol "zfs create -o com.sun:auto-snapshot=false $ZPOOL/var/cache"
+
+# legacy mountpoint with systemd is necessary at the fstab !
+cVol "zfs create -o acltype=posixacl -o xattr=sa -o mountpoint=legacy $ZPOOL/var/log"
 # We enable exec=on to compile program
 cVol "zfs create -o com.sun:auto-snapshot=false 
   -o sync=disabled -o exec=on 
   -o primarycache=metadata $ZPOOL/var/tmp"
+# docker need exec=on
+cVol "zfs create -o exec=on -o com.sun:auto-snapshot=false 
+  -o mountpoint=/var/lib/docker $ZPOOL/var/docker
 
 ####################################################
 # USR
