@@ -68,49 +68,40 @@ done
 createVols() {
 
 ####################################################
-# Swap
-
-cVol "zfs create -V 2G -b $(getconf PAGESIZE)
-  -o compression=zle
-  -o logbias=throughput -o sync=always
-  -o primarycache=metadata -o secondarycache=none
-  -o com.sun:auto-snapshot=false $ZPOOL/swap"
-
-####################################################
 # Root
 
 cVol "zfs create -o mountpoint=none -o canmount=off $ZPOOL/ROOT"
 cVol "zfs create -o mountpoint=/ -o setuid=on 
-  -o devices=on -o exec=on -o atime=off 
+  -o devices=on -o exec=on
   $ZPOOL/ROOT/gentoo"
 
 ####################################################
 # VAR
 
-cVol "zfs create -o devices=off -o exec=off $ZPOOL/var"
-cVol "zfs create -o com.sun:auto-snapshot=false $ZPOOL/var/cache"
+cVol "zfs create -o canmount=off -o devices=off -o exec=off $ZPOOL/var"
+cVol "zfs create -o mountpoint=/var/cache -o com.sun:auto-snapshot=false $ZPOOL/var/cache"
+cVol "zfs create -o mountpoint=/var/log $ZPOOL/var/log"
 
-# legacy mountpoint with systemd is necessary at the fstab !
-cVol "zfs create -o acltype=posixacl -o xattr=sa -o mountpoint=legacy $ZPOOL/var/log"
 # We enable exec=on to compile program
 cVol "zfs create -o com.sun:auto-snapshot=false 
   -o sync=disabled -o exec=on 
   -o primarycache=metadata $ZPOOL/var/tmp"
+
 # docker need exec=on
 cVol "zfs create -o exec=on -o com.sun:auto-snapshot=false 
-  -o mountpoint=/var/lib/docker $ZPOOL/var/docker
+  -o mountpoint=/var/lib/docker $ZPOOL/var/docker"
 
 ####################################################
 # USR
 
 # setuid=on on /usr to use sudo, passwd and other programs
-cVol "zfs create -o exec=on -o setuid=on $ZPOOL/usr"
+cVol "zfs create -o canmount=off -o exec=on -o setuid=on $ZPOOL/usr"
 
 ####################################################
 # HOME
 
-cVol "zfs create $ZPOOL/home"
-cVol "zfs create -o exec=on $ZPOOL/home/$USERNAME"
+cVol "zfs create -o canmount=off $ZPOOL/home"
+cVol "zfs create -o mountpoint=/home/$USERNAME -o exec=on $ZPOOL/home/$USERNAME"
 cVol "zfs create -o mountpoint=/root $ZPOOL/home/root"
 
 ####################################################
@@ -137,9 +128,9 @@ cVol "zfs create -o primarycache=metadata
 }
 
 clearVols() {
-  cVol "zfs destroy $ZPOOL/swap"
   cVol "zfs destroy $ZPOOL/ROOT/gentoo"
   cVol "zfs destroy $ZPOOL/ROOT"
+  cVol "zfs destroy $ZPOOL/var/docker"
   cVol "zfs destroy $ZPOOL/var/tmp"
   cVol "zfs destroy $ZPOOL/var/log"
   cVol "zfs destroy $ZPOOL/var/cache"

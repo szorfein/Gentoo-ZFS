@@ -44,7 +44,7 @@ fi
 
 function ifGentooHere() {
     local d_src="$WORKDIR/usr/src"
-    local d_lib="$WORKDIR/lib64/gentoo"
+    local d_lib="$WORKDIR/lib/gentoo"
     local d_var="$WORKDIR/var/log"
     local d_etc="$WORKDIR/etc/portage"
 
